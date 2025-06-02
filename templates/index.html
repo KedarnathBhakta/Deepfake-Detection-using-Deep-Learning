@@ -1,0 +1,105 @@
+<style>
+  /* Font import */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+    background-image: url('{{ url_for("static", filename="20250519_1115_Futuristic AI Control Center_simple_compose_01jvkh4nr2f9t81z0cjcvmw2mp (2).png") }}');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff; /* Default text color */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Ensure body covers full viewport height */
+    position: relative; /* Needed for ::before positioning */
+  }
+
+  /* Overlay for background dulling */
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+    z-index: 1;
+  }
+
+  .hero-content-wrapper {
+    position: relative; /* Needed for z-index */
+    z-index: 2; /* Ensure content is above overlay */
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white box */
+    color: #333; /* Dark text color for readability */
+    padding: 30px 40px; /* Adjusted padding for landscape */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 800px; /* Increased width for landscape */
+    width: 90%; /* Responsive width */
+    box-sizing: border-box; /* Include padding in width */
+    margin: auto; /* Center the wrapper */
+    display: flex; /* Use flexbox for landscape layout */
+    flex-direction: row; /* Arrange items horizontally */
+    align-items: center; /* Center items vertically */
+    gap: 30px; /* Space between columns */
+  }
+
+  .hero-content-wrapper .left-column {
+    flex: 1; /* Take up available space */
+    text-align: left; /* Align text to left */
+  }
+
+  .hero-content-wrapper .right-column {
+    flex: 1; /* Take up available space */
+  }
+
+  .hero-content-wrapper h1 {
+    font-size: 1.8em; /* Adjusted heading font size */
+    margin-bottom: 15px;
+    color: #007bff;
+    font-weight: 600;
+  }
+
+  .hero-content-wrapper p {
+    font-size: 0.9em; /* Adjusted paragraph font size */
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .hero-content-wrapper .btn-container {
+    margin-top: 20px;
+  }
+
+  .hero-content-wrapper .btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px; /* Adjusted button padding */
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em; /* Adjusted button font size */
+    transition: background-color 0.3s ease;
+  }
+
+  .hero-content-wrapper .btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-content-wrapper {
+      flex-direction: column; /* Stack vertically on mobile */
+      padding: 20px;
+      max-width: 90%;
+    }
+    
+    .hero-content-wrapper .left-column,
+    .hero-content-wrapper .right-column {
+      width: 100%;
+</style> 

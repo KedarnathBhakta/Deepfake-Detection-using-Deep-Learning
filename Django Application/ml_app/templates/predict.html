@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    {% if no_faces %}
+        <div class="alert alert-danger text-center">
+            <strong>No Faces Detected</strong><br>
+            We couldn't detect any faces in the video. Please try another video with clear facial features.<br>
+            <a href="/" class="btn btn-primary mt-3">Try Another Video</a>
+        </div>
+    {% else %}
+        <h2 class="mb-4 text-center">Prediction Result</h2>
+        <div class="row mb-4 justify-content-center">
+            <div class="col-md-8 text-center">
+                <video id="predict-media" width="480" height="320" controls {% if preprocessed_images %}poster="{% static preprocessed_images.0 %}"{% endif %}>
+                    <source src="{{ MEDIA_URL }}{{ original_video }}" type="video/mp4">
+                </video>
+                <div class="mt-3">
+                    <span class="badge {% if output == 'REAL' %}bg-success{% else %}bg-danger{% endif %} p-2" style="font-size:1.2rem;">
+                        {{ output }} (Confidence: {{ confidence }}%)
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <h4>Frame Analysis</h4>
+                <div class="d-flex flex-row flex-nowrap overflow-auto" style="gap: 1.5rem;">
+                    {% for each_image in preprocessed_images %}
+                        <div class="text-center shadow-sm p-2 bg-white rounded" style="min-width: 170px;">
+                            <img src="{% static each_image %}" width="160" height="120" class="img-thumbnail mb-1 border-primary" style="object-fit:cover; border-width:2px;" alt="Frame {{ forloop.counter }}">
+                            <div style="font-size:1rem; font-weight:500; color:#2c3e50;">Frame {{ forloop.counter }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <h4>Detected Faces</h4>
+                <div class="d-flex flex-row flex-nowrap overflow-auto" style="gap: 1.5rem;">
+                    {% for each_image in faces_cropped_images %}
+                        <div class="text-center shadow-sm p-2 bg-white rounded" style="min-width: 120px;">
+                            <img src="{% static each_image %}" width="110" height="110" class="img-thumbnail mb-1 border-info" style="object-fit:cover; border-width:2px;" alt="Face {{ forloop.counter }}">
+                            <div style="font-size:1rem; font-weight:500; color:#2c3e50;">Face {{ forloop.counter }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <a href="/" class="btn btn-primary">Analyze Another Video</a>
+            <button class="btn btn-secondary" onclick="window.print()">Print Report</button>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

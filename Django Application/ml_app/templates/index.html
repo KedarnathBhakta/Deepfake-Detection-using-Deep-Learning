@@ -1,0 +1,466 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Import Poppins font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+    /* Basic body style with background */
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: #343a40; /* Using a slightly softer dark color for text */
+        line-height: 1.4; /* Reduced line height */
+        min-height: 100vh;
+        position: relative;
+        overflow-y: hidden; /* Prevent vertical scrolling */
+        overflow-x: hidden;
+        /* Background image style */
+        background: url("{% static 'images/20250519_1115_Futuristic AI Control Center_simple_compose_01jvkh4nr2f9t81z0cjcvmw2mp (2).png' %}") no-repeat center center fixed !important;
+        background-size: cover !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        filter: none !important;
+    }
+
+    /* Overlay to dull the background image */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Adjusted Darker overlay for visibility */
+        z-index: -1;
+        filter: none !important;
+    }
+
+    /* Ensure main content and navigation are above the background and overlay */
+    .main-content {
+        position: relative;
+        z-index: 1;
+        filter: none !important;
+    }
+
+     .modern-nav { /* Assuming this class is on your nav element in base.html */
+         position: relative;
+         z-index: 10;
+         filter: none !important;
+     }
+
+    /* Hero Section - Ensure it takes full height and is above overlay */
+    .hero-section {
+        padding: 2rem 0; /* Reduced padding */
+        height: 100vh; /* Ensure full viewport height */
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        filter: none !important;
+    }
+
+    /* Wrapper for content inside hero section (The Solid White Box) */
+    .hero-content-wrapper {
+        background: #fff;
+        border-radius: 10px; /* Slightly less rounded */
+        padding: 30px; /* Reduced padding for smaller size */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Adjusted shadow */
+        width: 90%;
+        max-width: 800px; /* Reduced max width for smaller landscape */
+        margin: 0 auto;
+        opacity: 1;
+        border: 1px solid #eee; /* Lighter border */
+        filter: none !important;
+        max-height: calc(100vh - 60px); /* Adjusted max-height considering padding */
+        overflow-y: auto; /* Add scrolling if content still overflows */
+        display: flex; /* Use flexbox to manage columns */
+        align-items: flex-start; /* Align items to the top */
+        gap: 30px; /* Reduced space between columns */
+    }
+
+    /* Adjust padding for the row within the wrapper */
+    .hero-content-wrapper .row {
+        padding: 0; /* Remove row default padding if any */
+        flex-grow: 1; /* Allow the row to take available space */
+    }
+
+    .hero-content-wrapper .col-lg-6 {
+        /* Basic flex setup for columns */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Feature Item - Smaller Cards */
+    .feature-item {
+        background: #f8f9fa;
+        padding: 12px; /* Reduced padding */
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        color: #343a40;
+        font-weight: 500;
+        margin-bottom: 12px; /* Reduced margin */
+        filter: none !important;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-2px); /* Reduced lift on hover */
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-item i {
+         color: #007bff;
+         font-size: 1.8rem; /* Reduced icon size */
+         margin-bottom: 8px;
+    }
+
+    /* Upload Container - Smaller Box */
+    .upload-container {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px; /* Reduced padding */
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+        border: 1px solid #e9ecef;
+        filter: none !important;
+    }
+
+     /* Upload Area - Smaller */
+    .upload-area {
+        border: 2px dashed #007bff;
+        border-radius: 8px;
+        padding: 15px; /* Reduced padding */
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: rgba(0, 123, 255, 0.05);
+        color: #495057;
+        filter: none !important;
+    }
+
+    .upload-area:hover, .upload-area.highlight {
+        background: rgba(0, 123, 255, 0.1);
+        border-color: #0056b3;
+    }
+
+    .upload-area i {
+        font-size: 2rem; /* Reduced icon size */
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    /* Upload Button - Smaller */
+    .upload-btn {
+        display: inline-block;
+        padding: 0px; /* Reduced padding */
+        background: #28a745;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 12px; /* Reduced margin */
+        font-size: 0.85rem; /* Reduced font size */
+        filter: none !important;
+    }
+
+    .upload-btn:hover {
+        background: #218838;
+        transform: translateY(-1px); /* Reduced hover */
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Frame Selector - Smaller */
+    .frame-selector {
+        background: #f8f9fa;
+        padding: 15px; /* Reduced padding */
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        margin-top: 15px; /* Reduced margin */
+        filter: none !important;
+    }
+
+    .frame-selector label.form-label {
+         font-weight: 600;
+         color: #343a40;
+         margin-bottom: 8px; /* Reduced margin */
+         font-size: 0.95rem; /* Reduced label size */
+         filter: none !important;
+    }
+
+    .frame-option label {
+        display: block;
+        padding: 10px; /* Reduced padding */
+        text-align: center;
+        background: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #495057;
+        font-size: 0.9rem; /* Reduced font size */
+        filter: none !important;
+    }
+
+    .frame-option input[type="radio"]:checked + label {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+        box-shadow: 0 1px 6px rgba(0, 123, 255, 0.25); /* Reduced shadow */
+        font-weight: 600;
+    }
+
+    /* Analyze Button - Smaller */
+    .analyze-btn {
+        display: block;
+        width: 100%;
+        padding: 12px 20px; /* Reduced padding */
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem; /* Reduced font size */
+        font-weight: 700;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.8px; /* Reduced letter spacing */
+        margin-top: 20px; /* Reduced margin */
+        filter: none !important;
+    }
+
+    .analyze-btn:hover {
+        background: #c82333;
+        transform: translateY(-2px); /* Reduced hover */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Responsive Adjustments - Ensure landscape on larger screens and stack on smaller */
+    @media (min-width: 992px) {
+        .hero-content-wrapper .col-lg-6 {
+            flex: 1; /* Ensure columns take equal space in landscape */
+        }
+    }
+
+    @media (max-width: 991px) {
+        .hero-content-wrapper {
+            flex-direction: column; /* Stack columns vertically on smaller screens */
+            gap: 15px; /* Adjust gap for vertical stacking */
+            max-height: calc(100vh - 30px); /* Adjust max height for smaller screens */
+        }
+
+        .hero-content-wrapper .col-lg-6 {
+            width: 100%; /* Full width when stacked */
+        }
+    }
+
+     @media (max-width: 768px) {
+        .hero-content-wrapper {
+            padding: 15px; /* Further reduce padding on smaller screens */
+        }
+
+        .hero-content-wrapper h1 {
+             font-size: 1.4em;
+        }
+
+        .hero-content-wrapper p {
+             font-size: 0.8em;
+        }
+
+         .feature-item, .upload-container, .frame-selector {
+             padding: 10px;
+         }
+
+         .upload-area {
+             padding: 10px;
+         }
+
+         .feature-item i {
+            font-size: 1.6rem;
+        }
+
+        .upload-area i {
+             font-size: 1.8rem;
+        }
+
+         .upload-btn {
+             padding: 6px 14px;
+             font-size: 0.75rem;
+         }
+
+         .frame-selector label.form-label {
+             font-size: 0.85rem;
+         }
+
+         .frame-option label {
+             padding: 8px;
+             font-size: 0.8rem;
+         }
+
+         .analyze-btn {
+             font-size: 0.85rem;
+             padding: 10px 18px;
+         }
+
+          h1.display-4 {
+             font-size: 1.8rem;
+         }
+
+          p.lead {
+             font-size: 0.85rem;
+         }
+     }
+
+</style>
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center h-100"> <!-- Use h-100 to ensure row takes full height of hero-section -->
+            <div class="col-lg-12 h-100 d-flex align-items-center"> <!-- Use h-100 and d-flex/align-items-center to vertically center wrapper -->
+                <div class="hero-content-wrapper w-100"> <!-- Use w-100 to ensure wrapper takes full width of its column -->
+                    <div class="row">
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <h1 class="display-4 mb-3">DeepFake Detection AI</h1> <!-- Adjusted margin -->
+                            <p class="lead mb-3">Advanced AI-powered solution to detect manipulated videos and images. Protect yourself from deepfake threats with our cutting-edge technology.</p> <!-- Adjusted margin -->
+                            <div class="features-list mb-3"> <!-- Adjusted margin -->
+                                <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Real-time Detection</span>
+                                </div>
+                                <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>High Accuracy</span>
+                                </div>
+                                <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Quick Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6" data-aos="fade-left">
+                            <div class="upload-container">
+                                <div class="preview-container mb-3"> <!-- Adjusted margin -->
+                                    <video id="videos" class="preview-video" controls>
+                                        <source src="" id="video_source">
+                                        Your browser does not support HTML5 video.
+                                    </video>
+                                    <div class="preview-placeholder">
+                                        <i class="fas fa-video"></i>
+                                        <p>Video preview will appear here</p>
+                                    </div>
+                                </div>
+
+                                <form class="upload-form" method="POST" enctype="multipart/form-data" id="video-upload">
+                                    {% csrf_token %}
+                                    <div class="upload-area" id="drop-zone">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Drag & Drop your video here or</p>
+                                        <label class="upload-btn">
+                                            Choose File
+                                            {{ form.upload_video_file }}
+                                        </label>
+                                        {% if form.upload_video_file.errors %}
+                                            {% for error in form.upload_video_file.errors %}
+                                                <div class="alert alert-danger mt-2">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="frame-selector mt-3" data-aos="fade-up"> <!-- Adjusted margin -->
+                                        <label class="form-label">Select Frame Sequence:</label>
+                                        <div class="frame-options">
+                                            <div class="frame-option" data-frames="20">
+                                                <input type="radio" name="{{ form.sequence_length.name }}" value="20" id="frames20" checked>
+                                                <label for="frames20">20 Frames</label>
+                                            </div>
+                                            <div class="frame-option" data-frames="40">
+                                                <input type="radio" name="{{ form.sequence_length.name }}" value="40" id="frames40">
+                                                <label for="frames40">40 Frames</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="analyze-btn mt-3" data-aos="fade-up"> <!-- Adjusted margin -->
+                                        <i class="fas fa-search"></i> Analyze Video
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_scripts %}
+<script>
+$(document).ready(function() {
+    // Handle file selection
+    $('#{{ form.upload_video_file.id_for_label }}').change(function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const video = document.getElementById('videos');
+            const source = document.getElementById('video_source');
+            source.src = URL.createObjectURL(file);
+            video.load();
+            video.style.display = 'block';
+            $('.preview-placeholder').hide();
+        }
+    });
+
+    // Drag and drop functionality
+    const dropZone = document.getElementById('drop-zone');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        dropZone.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropZone.classList.remove('highlight');
+    }
+
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        const fileInput = document.getElementById('{{ form.upload_video_file.id_for_label }}');
+        fileInput.files = files;
+        $(fileInput).trigger('change');
+    }
+
+    // Form submission animation
+    $('#video-upload').on('submit', function() {
+        $('.analyze-btn').html('<i class="fas fa-spinner fa-spin"></i> Analyzing...');
+    });
+});
+</script>
+{% endblock %}
